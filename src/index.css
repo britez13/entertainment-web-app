@@ -5,6 +5,27 @@
 @tailwind utilities;
 
 
+html, body {
+  margin: 0;
+  padding: 0
+}
+
 body {
   font-family: 'Outfit', sans-serif;
+  background-color: #10141E;
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+@media(min-width: 1200px) { 
+  #root {
+    flex-direction: row;
+    gap: 24px;
+  }
 }
