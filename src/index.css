@@ -29,3 +29,11 @@ body {
     gap: 24px;
   }
 }
+
+#overlay:hover #play {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+

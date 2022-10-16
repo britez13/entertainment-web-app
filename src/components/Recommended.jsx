@@ -10,7 +10,7 @@ const Recommended = () => {
   return (
     <section className='mt-6'>
       <Subtitle text={"Recommended for you"} />
-      <div className="mt-4 flex gap-4 flex-wrap">
+      <div className="mt-4 flex gap-2 flex-wrap">
         {recommended.map((item) => {
           return <Card key={item.title} item={item} />;
         })}

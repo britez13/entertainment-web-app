@@ -1,13 +1,54 @@
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.svg";
-import { ReactComponent as HomeIcon } from "../assets/icon-nav-home.svg";
-import { ReactComponent as MoviesIcon } from "../assets/icon-nav-movies.svg";
-import { ReactComponent as SeriesIcon } from "../assets/icon-nav-tv-series.svg";
-import { ReactComponent as BookmarkIcon } from "../assets/icon-nav-bookmark.svg";
-import IconHome from "./IconHome";
+import HomeIcon from "./svg/HomeIcon";
+import MoviesIcon from "./svg/MoviesIcon";
+import SeriesIcon from "./svg/SeriesIcon"
+import BookmarkedIcon from "./svg/BookmarkedIcon";
 import avatar from "../assets/image-avatar.png";
 
 const Header = () => {
+  
+  const [color, setColor] = useState({ homeIconColor: "", moviesIconColor: "", seriesIconColor: "", bookmarkedIconColor: ""}); 
+  const [activeNav, setActiveNav] = useState({home: "white", movies: "", series: "", bookmarked: ""});
+  
+  // let activeNav = { home: "white", movies: "", series: "", bookmarked: "" };
+
+  
+  
+
+  useEffect( () => {
+
+    if(window.location.href.includes("movies")) {
+      // activeNav = { home: "", movies: "white", series: "", bookmarked: "" }; 
+      setActiveNav({ home: "", movies: "white", series: "", bookmarked: "" }); 
+    }
+
+    else if (window.location.href.includes("series")) {
+      // activeNav = { home: "", movies: "", series: "white", bookmarked: "" };  
+      setActiveNav({ home: "", movies: "", series: "white", bookmarked: "" }); 
+
+    }
+
+    else if (window.location.href.includes("bookmarked")) {
+      // activeNav = { home: "", movies: "", series: "", bookmarked: "white" }; 
+      setActiveNav({ home: "", movies: "", series: "", bookmarked: "white" });  
+      
+    }
+
+    else {
+      // activeNav = { home: "white", movies: "", series: "", bookmarked: "" }; 
+      setActiveNav({ home: "white", movies: "", series: "", bookmarked: "" });  
+    }
+
+    setColor(prev => prev)
+
+    console.log(activeNav);
+
+
+  }, [window.location.href])
+
+
   return (
     <header
       className='w-full h-[56px] bg-semiDarkBlue flex justify-between items-center px-4 md:w-[93%] 
@@ -22,23 +63,73 @@ const Header = () => {
       <nav>
         <ul className='flex items-center gap-6 lg:flex-col'>
           <li>
-            <NavLink to='/'>
-              <IconHome fill={"#fff"} />
+            <NavLink
+              // onMouseOver={() =>
+              //   setColor((prev) => {
+              //     return { ...prev, homeIconColor: "red" };
+              //   })
+              // }
+              // onMouseOut={() =>
+              //   setColor((prev) => {
+              //     return { ...prev, homeIconColor: "#5A698F" };
+              //   })
+              // }
+              to='/'
+            >
+              <HomeIcon color={activeNav.home || color.homeIconColor} />
             </NavLink>
           </li>
           <li>
-            <NavLink to='/movies'>
-              <MoviesIcon className='fill-white hover:fill-red cursor-pointer' />
+            <NavLink
+              // onMouseOver={() =>
+              //   setColor((prev) => {
+              //     return { ...prev, moviesIconColor: "red" };
+              //   })
+              // }
+              // onMouseOut={() =>
+              //   setColor((prev) => {
+              //     return { ...prev, moviesIconColor: "#5A698F" };
+              //   })
+              // }
+              to='/movies'
+            >
+              <MoviesIcon color={activeNav.movies || color.moviesIconColor} />
             </NavLink>
           </li>
           <li>
-            <NavLink to='/series'>
-              <SeriesIcon />
+            <NavLink
+              onMouseOver={() =>
+                setColor((prev) => {
+                  return { ...prev, seriesIconColor: "red" };
+                })
+              }
+              onMouseOut={() =>
+                setColor((prev) => {
+                  return { ...prev, seriesIconColor: "#5A698F" };
+                })
+              }
+              to='/series'
+            >
+              <SeriesIcon color={activeNav.series || color.seriesIconColor} />
             </NavLink>
           </li>
           <li>
-            <NavLink to='/bookmarked'>
-              <BookmarkIcon />
+            <NavLink
+              onMouseOver={() =>
+                setColor((prev) => {
+                  return { ...prev, bookmarkedIconColor: "red" };
+                })
+              }
+              onMouseOut={() =>
+                setColor((prev) => {
+                  return { ...prev, bookmarkedIconColor: "#5A698F" };
+                })
+              }
+              to='/bookmarked'
+            >
+              <BookmarkedIcon
+                color={activeNav.bookmarked || color.bookmarkedIconColor}
+              />
             </NavLink>
           </li>
         </ul>

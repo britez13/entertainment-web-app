@@ -28,7 +28,7 @@ export const data = [
       regular: {
         small: "./assets/thumbnails/bottom-gear/regular/small.jpg",
         medium: "./assets/thumbnails/bottom-gear/regular/medium.jpg",
-        large: "./assets/thumbnails/bottom-gear/regular/large.jpg",
+        large: "./src/assets/thumbnails/bottom-gear/regular/large.jpg",
       },
     },
     year: 2021,
@@ -47,7 +47,7 @@ export const data = [
       regular: {
         small: "./assets/thumbnails/undiscovered-cities/regular/small.jpg",
         medium: "./assets/thumbnails/undiscovered-cities/regular/medium.jpg",
-        large: "./assets/thumbnails/undiscovered-cities/regular/large.jpg",
+        large: "../src/assets/thumbnails/undiscovered-cities/regular/large.jpg",
       },
     },
     year: 2019,
@@ -66,7 +66,7 @@ export const data = [
       regular: {
         small: "./assets/thumbnails/1998/regular/small.jpg",
         medium: "./assets/thumbnails/1998/regular/medium.jpg",
-        large: "./assets/thumbnails/1998/regular/large.jpg",
+        large: "../src/assets/thumbnails/1998/regular/large.jpg",
       },
     },
     year: 2021,
@@ -85,7 +85,7 @@ export const data = [
       regular: {
         small: "./assets/thumbnails/dark-side-of-the-moon/regular/small.jpg",
         medium: "./assets/thumbnails/dark-side-of-the-moon/regular/medium.jpg",
-        large: "./assets/thumbnails/dark-side-of-the-moon/regular/large.jpg",
+        large: "./src/assets/thumbnails/dark-side-of-the-moon/regular/large.jpg",
       },
     },
     year: 2018,
