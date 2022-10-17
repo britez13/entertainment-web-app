@@ -3,51 +3,45 @@ import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.svg";
 import HomeIcon from "./svg/HomeIcon";
 import MoviesIcon from "./svg/MoviesIcon";
-import SeriesIcon from "./svg/SeriesIcon"
+import SeriesIcon from "./svg/SeriesIcon";
 import BookmarkedIcon from "./svg/BookmarkedIcon";
 import avatar from "../assets/image-avatar.png";
 
 const Header = () => {
-  
-  const [color, setColor] = useState({ homeIconColor: "", moviesIconColor: "", seriesIconColor: "", bookmarkedIconColor: ""}); 
-  const [activeNav, setActiveNav] = useState({home: "white", movies: "", series: "", bookmarked: ""});
-  
+  const [color, setColor] = useState({
+    homeIconColor: "",
+    moviesIconColor: "",
+    seriesIconColor: "",
+    bookmarkedIconColor: "",
+  });
+  const [activeNav, setActiveNav] = useState({
+    home: "white",
+    movies: "",
+    series: "",
+    bookmarked: "",
+  });
+
   // let activeNav = { home: "white", movies: "", series: "", bookmarked: "" };
 
-  
-  
-
-  useEffect( () => {
-
-    if(window.location.href.includes("movies")) {
-      // activeNav = { home: "", movies: "white", series: "", bookmarked: "" }; 
-      setActiveNav({ home: "", movies: "white", series: "", bookmarked: "" }); 
+  useEffect(() => {
+    if (window.location.href.includes("movies")) {
+      // activeNav = { home: "", movies: "white", series: "", bookmarked: "" };
+      setActiveNav({ home: "", movies: "white", series: "", bookmarked: "" });
+    } else if (window.location.href.includes("series")) {
+      // activeNav = { home: "", movies: "", series: "white", bookmarked: "" };
+      setActiveNav({ home: "", movies: "", series: "white", bookmarked: "" });
+    } else if (window.location.href.includes("bookmarked")) {
+      // activeNav = { home: "", movies: "", series: "", bookmarked: "white" };
+      setActiveNav({ home: "", movies: "", series: "", bookmarked: "white" });
+    } else {
+      // activeNav = { home: "white", movies: "", series: "", bookmarked: "" };
+      setActiveNav({ home: "white", movies: "", series: "", bookmarked: "" });
     }
 
-    else if (window.location.href.includes("series")) {
-      // activeNav = { home: "", movies: "", series: "white", bookmarked: "" };  
-      setActiveNav({ home: "", movies: "", series: "white", bookmarked: "" }); 
-
-    }
-
-    else if (window.location.href.includes("bookmarked")) {
-      // activeNav = { home: "", movies: "", series: "", bookmarked: "white" }; 
-      setActiveNav({ home: "", movies: "", series: "", bookmarked: "white" });  
-      
-    }
-
-    else {
-      // activeNav = { home: "white", movies: "", series: "", bookmarked: "" }; 
-      setActiveNav({ home: "white", movies: "", series: "", bookmarked: "" });  
-    }
-
-    setColor(prev => prev)
+    setColor((prev) => prev);
 
     console.log(activeNav);
-
-
-  }, [window.location.href])
-
+  }, [window.location.href]);
 
   return (
     <header
