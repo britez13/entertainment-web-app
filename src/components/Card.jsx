@@ -1,10 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import MovieIcon from "../assets/icon-nav-movies.svg";
 import SeriesIcon from "../assets/icon-nav-tv-series.svg";
 import CircleIcon from "../assets/icon-circle.svg";
 import PlayIcon from "../assets/icon-play.svg";
+import BookmarkedToggle from "./svg/BookmarkedToggle";
 
-const Card = ({ item }) => {
+const Card = ({ item, setShows }) => {
+ 
+  const handleClick = () => { 
+    if(item.isBookmarked) {
+      setShows( prev => {
+        const newShows = prev.map( show => {
+          if(show.title === item.title) {
+            return {...show, isBookmarked: false};
+          }
+          return show 
+        })
+
+        return newShows
+      })
+    }
+    else {
+      setShows((prev) => {
+        const newShows = prev.map((show) => {
+          if (show.title === item.title) {
+            return { ...show, isBookmarked: true };
+          }
+          return show;
+        });
+
+        return newShows;
+      });
+    }
+  }
+
   return (
     <div className='max-w-[164px] h-[154px] md:max-w-[220px] md:h-[192px] lg:max-w-[280px] lg:h-[226px]'>
       <div
@@ -29,7 +58,13 @@ const Card = ({ item }) => {
             <p className='text-white font-medium text-lg'>Play</p>
           </div>
         </div>
-        <div className='absolute z-20 top-2 right-2 w-[25px] h-[25px] rounded-full bg-darkBlue opacity-50 mix-blend-normal md:top-4 md:right-4 md:w-[32px] md:h-[32px]'></div>
+        <div
+          onClick={handleClick}
+          className='flex justify-center items-center absolute z-20 top-2 right-2 w-[25px] h-[25px] 
+          rounded-full bg-darkBlue opacity-80 mix-blend-normal md:top-4 md:right-4 md:w-[32px] md:h-[32px]'
+        >
+          <BookmarkedToggle color={item.isBookmarked ? "white" : "none"} />
+        </div>
       </div>
       <div className='flex items-center gap-2 mt-2 text-white text-[13px] font-light opacity-75 mix-blend-normal'>
         <p>{item.year}</p>

@@ -30,8 +30,8 @@ const SignUp = () => {
           placeholder='Password'
         />
         <input
-          className='bg-semiDarkBlue w-full mt-[24px] pl-4 pb-[17px] border-b border-greyishBlue
-         text-white opacity-50 mix-blend-normal font-light text-[15px]'
+          className='bg-semiDarkBlue w-full mt-[24px] pl-4 pb-[17px] border-b border-greyishBlue outline-none
+         text-white placeholder:opacity-50 placeholder:mix-blend-normal font-light text-[15px]'
           type='text'
           placeholder='Repeat Password'
         />
