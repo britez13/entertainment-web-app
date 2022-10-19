@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.svg";
 import HomeIcon from "./svg/HomeIcon";
 import MoviesIcon from "./svg/MoviesIcon";
@@ -8,6 +8,7 @@ import BookmarkedIcon from "./svg/BookmarkedIcon";
 import avatar from "../assets/image-avatar.png";
 
 const Header = () => {
+  const [isHeaderDisplay, setIsHeaderDisplay] = useState(true)
   const [color, setColor] = useState({
     homeIconColor: "",
     moviesIconColor: "",
@@ -21,9 +22,22 @@ const Header = () => {
     bookmarked: "",
   });
 
+  const navigate = useNavigate()
+
   // let activeNav = { home: "white", movies: "", series: "", bookmarked: "" };
 
   useEffect(() => {
+
+    console.log(window.location.pathname);
+    
+    
+    if (
+      window.location.pathname === "/" ||
+      window.location.pathname === "" 
+    ) {
+      navigate("/home");
+    }
+
     if (window.location.href.includes("movies")) {
       // activeNav = { home: "", movies: "white", series: "", bookmarked: "" };
       setActiveNav({ home: "", movies: "white", series: "", bookmarked: "" });
@@ -38,13 +52,26 @@ const Header = () => {
       setActiveNav({ home: "white", movies: "", series: "", bookmarked: "" });
     }
 
+    
+    
+    
+    if(window.location.href.includes("login") || window.location.href.includes("signup")) {
+      setIsHeaderDisplay(false)
+      console.log("hide header");
+    }
+
+    else {
+      setIsHeaderDisplay(true)
+      console.log("display header");
+    }
+
     setColor((prev) => prev);
 
     console.log(activeNav);
   }, [window.location.href]);
 
   return (
-    <header
+    isHeaderDisplay && <header
       className='w-full h-[56px] bg-semiDarkBlue flex justify-between items-center px-4 md:w-[93%] 
     md:h-[72px] md:px-5 md:mt-6 md:mx-auto md:rounded-[10px] lg:min-w-[96px] lg:w-[96px] lg:h-[95vh] lg:flex-col lg:justify-start 
     lg:gap-[70px] lg:rounded-[20px] lg:mx-0 lg:ml-6 lg:py-6'
@@ -68,7 +95,7 @@ const Header = () => {
               //     return { ...prev, homeIconColor: "#5A698F" };
               //   })
               // }
-              to='/'
+              to='/home'
             >
               <HomeIcon color={activeNav.home || color.homeIconColor} />
             </NavLink>
