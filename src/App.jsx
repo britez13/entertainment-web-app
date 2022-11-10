@@ -8,17 +8,19 @@ import Login from "./pages/Login";
 import Movies from "./pages/Movies";
 import Series from "./pages/Series";
 import SignUp from "./pages/SignUp";
-import { data } from "./data";
+// import { data } from "./data";
+import { UserContextProvider } from "./context/UserContext";
 
-export const DataContext = createContext();
+// export const DataContext = createContext();
 
 function App() {
-  const [shows, setShows] = useState(data);
+  // const [shows, setShows] = useState(data);
 
   return (
     <BrowserRouter>
       {/* <Header /> */}
-      <DataContext.Provider value={{ shows, setShows }}>
+      {/* <DataContext.Provider value={{ shows, setShows }}> */}
+      <UserContextProvider>
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route index path='home' element={<Home />} />
@@ -29,7 +31,8 @@ function App() {
           <Route path='/signup' element={<SignUp />} />
           <Route path='/login' element={<Login />} />
         </Routes>
-      </DataContext.Provider>
+      </UserContextProvider>
+      {/* </DataContext.Provider> */}
     </BrowserRouter>
   );
 }
