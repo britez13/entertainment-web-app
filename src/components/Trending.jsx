@@ -7,6 +7,8 @@ const Trending = () => {
   const { shows, setShows } = UserDataContext();
   const trendig = shows.filter((item) => item.isTrending === true);
 
+  console.log(import.meta.env.VITE_API_KEY)
+
   return (
     <section className='mt-3'>
       <Subtitle text={"Trending"} />

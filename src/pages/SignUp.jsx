@@ -87,7 +87,7 @@ const SignUp = () => {
         // console.log();
         navigate("/home");
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
     }
   };

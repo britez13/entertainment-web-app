@@ -22,11 +22,7 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (user?.email && !user?.email) {
-      navigate("/login");
-    }
-  });
+  
 
   return (
     <main

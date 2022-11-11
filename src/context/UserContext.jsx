@@ -26,9 +26,9 @@ export function UserContextProvider({ children }) {
 
   function signUp(email, password) {
     createUserWithEmailAndPassword(auth, email, password);
-    setDoc(doc(db, "users", email), {
-      savedMovies: [],
-    });
+    // setDoc(doc(db, "users", email), {
+    //   savedMovies: [],
+    // });
   }
 
   function logIn(email, password) {

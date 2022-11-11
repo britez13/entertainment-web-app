@@ -27,7 +27,6 @@ const Header = () => {
   // let activeNav = { home: "white", movies: "", series: "", bookmarked: "" };
 
   useEffect(() => {
-    console.log(window.location.pathname);
 
     if (window.location.pathname === "/" || window.location.pathname === "") {
       navigate("/home");
@@ -52,15 +51,12 @@ const Header = () => {
       window.location.href.includes("signup")
     ) {
       setIsHeaderDisplay(false);
-      console.log("hide header");
     } else {
       setIsHeaderDisplay(true);
-      console.log("display header");
     }
 
     setColor((prev) => prev);
 
-    console.log(activeNav);
   }, [window.location.href]);
 
   return (

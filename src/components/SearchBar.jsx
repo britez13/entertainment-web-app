@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import IconSearch from "../assets/icon-search.svg";
 import { UserDataContext } from "../context/UserContext";
 
 const SearchBar = ({ text }) => {
   // const [focus, setFocus] = useState(false);
-  const { searchedShow, setSearchedShow } = UserDataContext();
+  const { user, setSearchedShow } = UserDataContext();
+  const navigate = useNavigate();
+
 
   // console.log(searchedShow)
+
+
 
   const handleChange = (e) => {
     
@@ -33,6 +38,12 @@ const SearchBar = ({ text }) => {
       });
     }
   }
+
+  useEffect(() => {
+    if (!user?.email) {
+      navigate("/login");
+    }
+  });
 
   return (
     <section className='flex items-center gap-4 overflow-y-hidden'>
