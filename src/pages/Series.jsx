@@ -21,17 +21,20 @@ const Series = () => {
       show.category === "TV Series"
   );
   return (
-    <main className='mt-4 px-4 md:px-6 lg:mt-12 lg:px-0'>
+    <main className='grow mt-4 px-4 md:px-6 lg:mt-12 lg:px-0'>
       <SearchBar text={"Search for TV Series"} />
-      <section className='mt-3'>
+      <section className='mt-6'>
         {searchedWordLength ? (
           <section>
-            <h2 className='text-white font-light text-xl tracking-[-0.31px]'>
+            <h1
+              className='text-white font-light text-xl tracking-[-0.31px] 
+      md:text-[32px] md:tracking-[-0.5px]'
+            >
               Found {coincidencesShows.length} results for '
               {searchedShow.seriesSearch}'
-            </h2>
+            </h1>
 
-            <div className='flex gap-2 flex-wrap mt-4'>
+            <div className='mt-6 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4'>
               {coincidencesShows.map((item) => {
                 return (
                   <Card
@@ -47,7 +50,7 @@ const Series = () => {
         ) : (
           <>
             <Subtitle text={"TV Series"} />
-            <div className='flex gap-2 flex-wrap mt-4'>
+            <div className='mt-6 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4'>
               {series.map((item) => {
                 return (
                   <Card

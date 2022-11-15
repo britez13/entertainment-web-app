@@ -3,15 +3,20 @@ import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { UserDataContext } from "../context/UserContext";
 
 
-import MovieIcon from "../assets/icon-nav-movies.svg";
-import SeriesIcon from "../assets/icon-nav-tv-series.svg";
+import MovieIcon from "../assets/icon-nav-white-movies.svg";
+import SeriesIcon from "../assets/icon-nav-white-series.svg";
 import CircleIcon from "../assets/icon-circle.svg";
 import PlayIcon from "../assets/icon-play.svg";
 import BookmarkedToggle from "./svg/BookmarkedToggle";
 
 const TrendingCard = ({ item,shows, setShows }) => {
 
-const handleClick = async () => {
+  
+  const {user} = UserDataContext();
+
+   const userDataRef = doc(db, "users", `${user?.email}`);
+
+  const handleClick = async () => {
   if (item.isBookmarked) {
     setShows((prev) => {
       const newShows = prev.map((show) => {
@@ -70,7 +75,7 @@ const handleClick = async () => {
         alt={item.title}
       />
 
-      <div className='absolute rounded-lg bottom-[24px] left-[24px] z-10'>
+      <div className='absolute rounded-lg bottom-[16px] left-[16px] z-10 md:bottom-[24px] md:left-[24px]'>
         <div className='flex items-center gap-2 mt-2 text-white text-[13px] font-light opacity-75 mix-blend-normal'>
           <p>{item.year}</p>
           <span className='mx-[2px]'>
@@ -89,7 +94,9 @@ const handleClick = async () => {
           </span>
           <p>{item.rating}</p>
         </div>
-        <h2 className='text-white text-2xl font-medium'>{item.title}</h2>
+        <h2 className='text-white text-[15px] font-medium md:text-2xl'>
+          {item.title}
+        </h2>
       </div>
 
       <div

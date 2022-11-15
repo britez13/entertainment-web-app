@@ -2,13 +2,14 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase.config";
 // import { signInWithEmailAndPassword } from "firebase/auth";
+import Subtitle from "../components/Subtitle";
 import logo from "../assets/logo.svg";
 import { UserDataContext } from "../context/UserContext";
 
 const Login = () => {
   const { logIn } = UserDataContext()
   const [user, setUser] = useState({ email: "", password: "" });
-  const [error, setError] = useState({ emailError: false, passwordError: false }); 
+  const [error, setError] = useState({ emptyEmail: false, emptyPassword: false, invalidEmail: false }); 
  
   const navigate = useNavigate();
 
@@ -20,22 +21,53 @@ const Login = () => {
 
     if(e.target.name === "email" && e.target.value.length) {
       setError(prev => { 
-        return {...prev,  emailError: false }
+        return {...prev,  emptyEmail: false, invalidEmail: false }
       })
     }
 
     else if(e.target.name === "password" && e.target.value.length) {
       setError((prev) => {
-        return { ...prev, passwordError: false };
+        return { ...prev, emptyPassword: false };
       });
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (user.email && user.password) {
+    // if (user.email && user.password) {
+    //   setError((prev) => {
+    //     return { emptyEmail: false, emptyPassword: false };
+    //   });
+
+    //   try {
+    //     await logIn(user.email, user.password);
+    //     // console.log(user);
+    //     // const userAuthed = await signInWithEmailAndPassword(
+    //     //   auth,
+    //     //   user.email,
+    //     //   user.password
+    //     // );
+    //     // console.log(userAuthed);
+    //     navigate("/home");
+    //   } catch (error) {
+    //     alert(error);
+    //   }
+    // } 
+
+
+    if (!user.email && !user.password) {
+      setError({ emptyEmail: true, emptyPassword: true });
+    } 
+    
+    else if (!user.email) {
+      setError((prev) => ({...prev, emptyEmail: true}));
+    } else if (!/^\S+@\S+\.\S+$/.test(user.email)) {
+      setError((prev) => ({ ...prev, invalidEmail: true }));
+    } else if (!user.password) {
+      setError((prev) => ({ ...prev, emptyPassword: true }));
+    } else {
       setError((prev) => {
-        return { emailError: false, passwordError: false };
+        return { emptyEmail: false, emptyPassword: false, invalidEmail: false };
       });
 
       try {
@@ -51,16 +83,6 @@ const Login = () => {
       } catch (error) {
         alert(error);
       }
-    } else if (!user.email && !user.password) {
-      setError({ emailError: true, passwordError: true });
-    } 
-    
-    else if (!user.email) {
-      setError({ emailError: true, passwordError: false });
-    } 
-    
-    else if (!user.password) {
-      setError({emailError: false,  passwordError: true });
     }
 
 
@@ -79,38 +101,36 @@ const Login = () => {
         className='bg-semiDarkBlue w-[90%] min-h-[365px] mx-auto mt-12 rounded-[10px] px-[24px] py-[24px] 
       md:w-[400px] md:rounded-[20px]'
       >
-        <h1 className='text-white text-[32px] font-light tracking-[-0.5px]'>
-          Login
-        </h1>
+        <Subtitle text={"Login"} />
         <div className='relative'>
           <input
             className={`bg-semiDarkBlue w-full mt-[40px] pl-4 pb-[17px] border-b ${
-              error.emailError ? "border-red" : "border-greyishBlue"
+              error.emptyEmail || error.invalidEmail ? "border-red" : "border-greyishBlue"
             } outline-none focus:border-white
          text-white placeholder:opacity-50 placeholder:mix-blend-normal font-light text-[15px]`}
-            type='text'
+            type='email'
             placeholder='Email address'
             name='email'
             onChange={handleChange}
           />
           <div className='text-red font-light text-[13px] absolute top-[50%] right-3'>
-            {error.emailError ? "Can't be empty" : ""}
+            {error.emptyEmail ? "Can't be empty" : error.invalidEmail ? "Invalid email" : ""}
           </div>
         </div>
 
         <div className='relative'>
           <input
             className={`bg-semiDarkBlue w-full mt-[24px] pl-4 pb-[17px] border-b ${
-              error.passwordError ? "border-red" : "border-greyishBlue"
+              error.emptyPassword ? "border-red" : "border-greyishBlue"
             } outline-none focus:border-white
          text-white placeholder:opacity-50 placeholder:mix-blend-normal font-light text-[15px]`}
-            type='text'
+            type='password'
             placeholder='Password'
             name='password'
             onChange={handleChange}
           />
           <div className='text-red font-light text-[13px] absolute top-[40%] right-3'>
-            {error.passwordError ? "Can't be empty" : ""}
+            {error.emptyPassword ? "Can't be empty" : ""}
           </div>
         </div>
         <button

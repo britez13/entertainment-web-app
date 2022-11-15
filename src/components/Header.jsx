@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { db } from "../firebase.config";
+import { doc, getDoc } from "firebase/firestore";
+
+
 import logo from "../assets/logo.svg";
 import HomeIcon from "./svg/HomeIcon";
 import MoviesIcon from "./svg/MoviesIcon";
 import SeriesIcon from "./svg/SeriesIcon";
 import BookmarkedIcon from "./svg/BookmarkedIcon";
 import avatar from "../assets/image-avatar.png";
+import { UserDataContext } from "../context/UserContext";
+
 
 const Header = () => {
   const [isHeaderDisplay, setIsHeaderDisplay] = useState(true);
@@ -22,12 +28,35 @@ const Header = () => {
     bookmarked: "",
   });
 
+  
+  const {user, setShows} = UserDataContext()
+
   const navigate = useNavigate();
+
+  const getUserData = async() => {
+    
+  
+    console.log("the user is " + user?.email);
+
+    const docRef = doc(db, "users", `${user.email}`);
+
+    try {
+      const docSnap = await getDoc(docRef);
+      const savedShows = docSnap.data().shows
+      setShows(savedShows)
+      
+      
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+
+
 
   // let activeNav = { home: "white", movies: "", series: "", bookmarked: "" };
 
   useEffect(() => {
-
     if (window.location.pathname === "/" || window.location.pathname === "") {
       navigate("/home");
     }
@@ -56,8 +85,15 @@ const Header = () => {
     }
 
     setColor((prev) => prev);
-
   }, [window.location.href]);
+
+
+  
+  
+  useEffect( () => {
+    getUserData()
+  }, [])
+
 
   return (
     isHeaderDisplay && (
@@ -72,32 +108,24 @@ const Header = () => {
           alt='logo image'
         />
         <nav>
-          <ul className='flex items-center gap-6 lg:flex-col'>
+          <ul className='flex items-center gap-6 lg:flex-col lg:gap-10'>
             <li>
-              <NavLink
-                to='/home'
-              >
+              <NavLink to='/home'>
                 <HomeIcon color={activeNav.home || color.homeIconColor} />
               </NavLink>
             </li>
             <li>
-              <NavLink
-                to='/movies'
-              >
+              <NavLink to='/movies'>
                 <MoviesIcon color={activeNav.movies || color.moviesIconColor} />
               </NavLink>
             </li>
             <li>
-              <NavLink      
-                to='/series'
-              >
+              <NavLink to='/series'>
                 <SeriesIcon color={activeNav.series || color.seriesIconColor} />
               </NavLink>
             </li>
             <li>
-              <NavLink
-                to='/bookmarked'
-              >
+              <NavLink to='/bookmarked'>
                 <BookmarkedIcon
                   color={activeNav.bookmarked || color.bookmarkedIconColor}
                 />

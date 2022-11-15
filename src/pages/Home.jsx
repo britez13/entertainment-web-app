@@ -27,18 +27,21 @@ const Home = () => {
   return (
     <main
       id='home'
-      className='mt-4 px-4 md:px-6 lg:mt-12 lg:px-0 lg:overflow-x-hidden'
+      className='grow mt-4 px-4 md:px-6 lg:mt-12 lg:px-0 lg:overflow-x-hidden overflow-y-hidden'
     >
       <SearchBar text='Search for movies or TV series' />
 
       {searchedWordLength > 0 ? (
-        <section>
-          <h2 className='text-white font-light text-xl tracking-[-0.31px]'>
+        <section className="mt-6">
+          <h1
+            className='text-white font-light text-xl tracking-[-0.31px] 
+      md:text-[32px] md:tracking-[-0.5px]'
+          >
             Found {coincidencesShows.length} results for '
             {searchedShow.homeSearch}'
-          </h2>
+          </h1>
 
-          <div className='flex gap-2 flex-wrap mt-4'>
+          <div className='mt-6 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4'>
             {coincidencesShows.map((item) => {
               return (
                 <Card

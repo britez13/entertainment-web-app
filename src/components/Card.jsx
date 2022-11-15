@@ -2,67 +2,122 @@ import React, { useState } from "react";
 import { db } from "../firebase.config";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 
-import MovieIcon from "../assets/icon-nav-movies.svg";
-import SeriesIcon from "../assets/icon-nav-tv-series.svg";
+import MovieIcon from "../assets/icon-nav-white-movies.svg";
+import SeriesIcon from "../assets/icon-nav-white-series.svg";
 import CircleIcon from "../assets/icon-circle.svg";
 import PlayIcon from "../assets/icon-play.svg";
 import BookmarkedToggle from "./svg/BookmarkedToggle";
+import MoviesIcon from "./svg/MoviesIcon";
 import { UserDataContext } from "../context/UserContext";
-  const Card = ({ item, shows, setShows }) => {
-    const { user } = UserDataContext();
-  
-   const userDataRef = doc(db, "users", `${user?.email}`);
-  
-    const handleClick = async () => {
-      if (item.isBookmarked) {
-      setShows((prev) => {
-          const newShows = prev.map((show) => {
-            if (show.title === item.title) {
-              console.log(`${show.title}: ${show.isBookmarked}`);
-              return { ...show, isBookmarked: false };
-          }
-            return show;
-        });
-          return newShows;
-        });
-  
-        // console.log(shows);
-  
-        try {
-          await updateDoc(userDataRef, {
-            shows: { ...shows },
-          });
-        } catch (error) {
-          console.log(error);
-       } 
-     } else  {
-        setShows((prev) => {
-        const newShows = prev.map((show) => {
-            if (show.title === item.title) {
-              console.log(`${show.title}: ${show.isBookmarked}`);
-            return { ...show, isBookmarked: true };
-            }
-  
-          return show;
-          });
+const Card = ({ item, shows, setShows }) => {
+  const { user } = UserDataContext();
 
-          return newShows;
+  const userDataRef = doc(db, "users", `${user?.email}`);
+
+  // console.log("Processing...");
+
+
+  const handleClick = async() => {
+    if (item.isBookmarked) {
+      // setShows((prev) => {
+      //   console.log(prev);
+      //   const newShows = prev.map((show) => {
+      //     if (show.title === item.title) {
+      //       console.log(`${show.title}: ${show.isBookmarked}`);
+      //       return { ...show, isBookmarked: false };
+      //     }
+      //     return show;
+      //   });
+      //   return newShows;
+      // });
+
+
+
+      const newShows = shows.map((show) => {
+        if (show.title === item.title) {
+          return { ...show, isBookmarked: false };
+        }
+        // console.log("Processing...");
+        return show;
+      });
+
+      // console.log("new Shows in action when it was true")
+      // console.table(newShows)
+
+
+
+      // console.log("Before update when it was true previously");
+      // console.table(shows)
+      setShows(newShows);
+      // console.log("After update");
+      // console.table(shows)
+
+      // console.log("Inside the handle click");
+      // console.log(shows);
+      // console.log("I click to save");
+      // console.log(shows);
+
+      try {
+        await updateDoc(userDataRef, {
+          shows: [...shows],
         });
-  
-        // console.log(shows);
-  
-        try {
-          await updateDoc(userDataRef, {
-            shows: { ...shows },
-          });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      // setShows((prev) => {
+      //   const newShows = prev.map((show) => {
+      //     if (show.title === item.title) {
+      //       console.log(`${show.title}: ${show.isBookmarked}`);
+      //       return { ...show, isBookmarked: true };
+      //     }
+
+      //     return show;
+      //   });
+
+      //   return newShows;
+      // });
+
+      // console.log(shows);
+
+      const newShows = shows.map((show) => {
+        if (show.title === item.title) {
+          return { ...show, isBookmarked: true };
+        }
+        return show;
+      });
+
+      // setShows(newShows);
+
+      // console.log("I click to unsave");
+      // console.log(shows);
+
+      // console.log("Before update when it was false");
+      // console.table(shows);
+      setShows(newShows);
+      // console.log("After update");
+      // console.table(shows);
+
+      
+
+      // console.log("new Shows in action when it was false");
+      // console.table(newShows);
+
+      try {
+        await updateDoc(userDataRef, {
+          shows: [...newShows],
+        });
       } catch (error) {
         console.log(error);
       }
     }
   };
 
+  // console.log("Outside of the fucking process");
+  // console.log(shows);
+
   return (
-    <div className='max-w-[164px] h-[154px] md:max-w-[220px] md:h-[192px] lg:max-w-[280px] lg:h-[226px]'>
+    <div className='w-[full] h-[154px] md:max-w-[220px] md:h-[192px] lg:max-w-[280px] lg:h-[226px]'>
       <div
         id='container'
         className='w-full h-[110px] rounded-lg object-cover md:h-[140px] lg:h-[174px] relative'
@@ -97,7 +152,7 @@ import { UserDataContext } from "../context/UserContext";
           <BookmarkedToggle color={item.isBookmarked ? "white" : "none"} />
         </div>
       </div>
-      <div className='flex items-center gap-2 mt-2 text-white text-[13px] font-light opacity-75 mix-blend-normal'>
+      <div className='flex items-center gap-1 mt-2 text-white text-[13px] font-light opacity-75 mix-blend-normal'>
         <p>{item.year}</p>
         <span className='mx-[2px]'>
           <img src={CircleIcon} alt='circle icon' />
@@ -115,7 +170,7 @@ import { UserDataContext } from "../context/UserContext";
         </span>
         <p>{item.rating}</p>
       </div>
-      <h2 className='text-white text-sm font-medium md:text-lg'>
+      <h2 className='text-white text-sm font-medium mt-[2px] md:text-lg'>
         {item.title}
       </h2>
     </div>

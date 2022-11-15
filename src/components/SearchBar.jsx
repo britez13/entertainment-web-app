@@ -4,7 +4,7 @@ import IconSearch from "../assets/icon-search.svg";
 import { UserDataContext } from "../context/UserContext";
 
 const SearchBar = ({ text }) => {
-  // const [focus, setFocus] = useState(false);
+  const [focus, setFocus] = useState(false);
   const { user, setSearchedShow } = UserDataContext();
   const navigate = useNavigate();
 
@@ -46,21 +46,32 @@ const SearchBar = ({ text }) => {
   });
 
   return (
-    <section className='flex items-center gap-4 overflow-y-hidden'>
-      <img
-        className='w-[18px] h-[18px] md:w-[24px] md:h-[24px]'
-        src={IconSearch}
-        alt='icon serch'
-      />
-      <input
-        id='input'
-        className='relative bg-darkBlue text-white caret-red text-base font-light grow outline-0 
-        placeholder:opacity-50 placeholder:mix-blond-normal md:text-2xl'
-        type='text'
-        placeholder={text}
-        onChange={handleChange}
-      />
-    </section>
+    <>
+      <section className='flex items-center gap-4'>
+        <img
+          className='w-[18px] h-[18px] md:w-[24px] md:h-[24px]'
+          src={IconSearch}
+          alt='icon serch'
+        />
+        <input
+          id='input'
+          className='relative bg-darkBlue text-white caret-red text-base font-light grow outline-0 
+        placeholder:opacity-50 placeholder:mix-blond-normal md:text-2xl '
+          type='search'
+          placeholder={text}
+          onChange={handleChange}
+          onFocus={() => setFocus(true)}
+          onBlur={() => setFocus(false)}
+        />
+      </section>
+      <div className='mt-3 flex items-center gap-4 lg:mr-3'>
+        <span className='w-[18px] h-0 md:w-[24px]'></span>
+        <span
+          id='underline'
+          className={`w-full h-[1px] bg-greyishBlue ${focus ? 'active' : ''}`}
+        ></span>
+      </div>
+    </>
   );
 };
 

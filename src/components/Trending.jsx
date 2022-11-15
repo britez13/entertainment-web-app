@@ -7,13 +7,14 @@ const Trending = () => {
   const { shows, setShows } = UserDataContext();
   const trendig = shows.filter((item) => item.isTrending === true);
 
-  console.log(import.meta.env.VITE_API_KEY)
 
   return (
-    <section className='mt-3'>
+    <section className='mt-6'>
       <Subtitle text={"Trending"} />
-      <div className='slider-container mt-4 flex gap-5 overflow-x-auto scroll-smooth snap-x 
-      snap-mandatory lg:overflow-x-scroll lg:overflow-y-hidden'>
+      <div
+        className='slider-container mt-6 flex gap-4 overflow-x-auto scroll-smooth snap-x 
+      snap-mandatory md:gap-10'
+      >
         {trendig.map((item) => {
           return (
             <TrendingCard

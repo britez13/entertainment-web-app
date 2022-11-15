@@ -31,6 +31,11 @@ body {
   }
 }
 
+input:-webkit-autofill,
+  input:-webkit-autofill:focus {
+    transition: background-color 600000s 0s, color 600000s 0s;
+  }
+
 
 @media (min-width: 1024px) {
   .slider-container::-webkit-scrollbar {
@@ -64,29 +69,14 @@ body {
 }
 
 
-/* .underliness {
-  border-bottom: 1px solid #5A698F;
+
+#underline {
+  opacity: 0;
+  transition: opacity .3s ease
 }
 
-.no-underline {
-  border-bottom: 1px solid transparent;
-} */
 
-
-#sectionn {
-  transform: scale(1);
-  position: relative;
-}
-
-#sectionn::after {
-  position: absolute;
-  display: block;
-  top: 0;
-  right: 0;
-  left: 0;
-  width: 40px;
-  height: 10px;
-  background-color: red;
-  z-index: 999;
+#underline.active {
+  opacity: 1;
 }
 
