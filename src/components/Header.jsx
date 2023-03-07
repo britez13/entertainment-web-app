@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { db } from "../firebase.config";
 import { doc, getDoc } from "firebase/firestore";
-
-
 import logo from "../assets/logo.svg";
 import HomeIcon from "./svg/HomeIcon";
 import MoviesIcon from "./svg/MoviesIcon";
@@ -35,16 +33,14 @@ const Header = () => {
 
   const getUserData = async() => {
     
-  
-    console.log("the user is " + user?.email);
-
-    const docRef = doc(db, "users", `${user.email}`);
+    const docRef = doc(db, "users", `${user?.email}`);
 
     try {
       const docSnap = await getDoc(docRef);
       const savedShows = docSnap.data().shows
-      setShows(savedShows)
-      
+      if(savedShows.length > 0) {
+        setShows(savedShows);
+      }
       
     } catch (error) {
       console.log(error);
@@ -54,7 +50,6 @@ const Header = () => {
 
 
 
-  // let activeNav = { home: "white", movies: "", series: "", bookmarked: "" };
 
   useEffect(() => {
     if (window.location.pathname === "/" || window.location.pathname === "") {
@@ -62,16 +57,12 @@ const Header = () => {
     }
 
     if (window.location.href.includes("movies")) {
-      // activeNav = { home: "", movies: "white", series: "", bookmarked: "" };
       setActiveNav({ home: "", movies: "white", series: "", bookmarked: "" });
     } else if (window.location.href.includes("series")) {
-      // activeNav = { home: "", movies: "", series: "white", bookmarked: "" };
       setActiveNav({ home: "", movies: "", series: "white", bookmarked: "" });
     } else if (window.location.href.includes("bookmarked")) {
-      // activeNav = { home: "", movies: "", series: "", bookmarked: "white" };
       setActiveNav({ home: "", movies: "", series: "", bookmarked: "white" });
     } else {
-      // activeNav = { home: "white", movies: "", series: "", bookmarked: "" };
       setActiveNav({ home: "white", movies: "", series: "", bookmarked: "" });
     }
 

@@ -12,7 +12,7 @@ const Home = () => {
   const [trendig, setTrending] = useState([]);
 
   const { user, shows, setShows, searchedShow } = UserDataContext();
-  console.log(user?.email);
+  // console.log(user?.email);
 
   const searchedWordLength = searchedShow.homeSearch.trim().length;
 
